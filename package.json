@@ -1,0 +1,36 @@
+{
+  "name": "gh-project-migrator",
+  "version": "1.0.0",
+  "description": "Helper script to migrate columns and crads from a GitHub project to another.",
+  "main": "dist/index.js",
+  "dependencies": {
+    "@octokit/graphql": "^4.3.1",
+    "@octokit/types": "^2.12.2"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "jest": "^25.5.2",
+    "lint-staged": "^10.2.1",
+    "prettier": "^2.0.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/froi/gh-project-migrator.git"
+  },
+  "keywords": [
+    "github",
+    "projects",
+    "migration"
+  ],
+  "author": "Froilan Irizarry Rivera",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/froi/gh-project-migrator/issues"
+  },
+  "homepage": "https://github.com/froi/gh-project-migrator#readme"
+}
