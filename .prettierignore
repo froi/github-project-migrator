@@ -1,1 +1,3 @@
-*.csv
+dist/
+lib/
+node_modules/
