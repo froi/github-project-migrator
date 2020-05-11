@@ -88,3 +88,7 @@ playground.js
 
 # Emacs tmp files
 .\#*
+
+# Output directory
+dist/**/*.map
+dist/**/*.d.ts
