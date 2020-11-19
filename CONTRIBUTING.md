@@ -20,7 +20,7 @@ Por favor [lea nuestro archivo de como contribuir](.github/contribuir.md).
 
 :tada:Thank you for being interested in contributing :tada:
 
-Please take a look at our [contibuting.md file](.github/contibuting.md).
+Please take a look at our [contributing.md file](.github/contributing.md).
 
 ### TLDR
 
