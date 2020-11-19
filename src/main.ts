@@ -103,7 +103,7 @@ async function main(): Promise<void> {
   const targetProjectNumber: string = process.env.TARGET_PROJECT_NUMBER || '';
 
   if (!org) {
-    throw Error("[ERROR] sourceRepo doesn't have a value.");
+    throw Error("[ERROR] organization doesn't have a value.");
   }
   if (!sourceRepo) {
     throw Error("[ERROR] sourceRepo doesn't have a value.");
