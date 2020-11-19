@@ -1,6 +1,6 @@
 {
   "name": "gh-project-migrator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Helper script to migrate columns and crads from a GitHub project to another.",
   "main": "dist/index.js",
   "dependencies": {
