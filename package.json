@@ -4,22 +4,22 @@
   "description": "Helper script to migrate columns and crads from a GitHub project to another.",
   "main": "dist/index.js",
   "dependencies": {
-    "@octokit/graphql": "^4.3.1",
-    "@octokit/types": "^2.12.2"
+    "@octokit/graphql": "^4.5.7",
+    "@octokit/types": "^2.16.2"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.1",
-    "@types/node": "^13.13.5",
-    "@typescript-eslint/eslint-plugin": "^2.31.0",
-    "@typescript-eslint/parser": "^2.31.0",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^13.13.31",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
-    "eslint-plugin-jest": "^23.8.2",
-    "jest": "^25.5.2",
-    "lint-staged": "^10.2.1",
-    "prettier": "^2.0.5",
+    "eslint-plugin-jest": "^23.20.0",
+    "jest": "^25.5.4",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
     "ts-jest": "^25.5.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.7"
   },
   "scripts": {
     "build": "tsc",
