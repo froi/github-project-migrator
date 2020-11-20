@@ -28,7 +28,9 @@
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint src/**/*.ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "start": "node dist/main.js",
+    "build-start": "npm run build && npm start"
   },
   "husky": {
     "hooks": {
@@ -52,7 +54,7 @@
     "migration"
   ],
   "author": "Froilan Irizarry Rivera",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/froi/gh-project-migrator/issues"
   },
