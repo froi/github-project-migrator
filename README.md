@@ -1,5 +1,7 @@
 # GitHub Project Board Migrator
 
+[Español](#español) | [English](#english)
+
 ## Español
 
 Una herramienta para ayudar move y migrar un tablero de proyecto de un repositorio a una organización.
