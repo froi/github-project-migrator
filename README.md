@@ -28,6 +28,10 @@ Para trabajar o correr este proyecto necesita [instalar Node.js][NODEJS] en su m
 1. Ejecute el comando de __build__ `> npm run build`
 1. Ejecute el comando de __start__ `> npm start`
 
+:rotating_light: __Nota__ :rotating_light:
+
+El proyecto tambien incluye el commando __build-start__ que ejecuta los commandos de __build__ y __start__ `> npm run build-start` :eyes:
+
 ## English
 
 A tool to help move and migrate GitHub project boards from a repository to an organization.
@@ -55,6 +59,10 @@ To work with or run this project you need to have [Node.js installed][NODEJS] on
     1. Add or replace the necessary values in this file
 1. Run the __build__ command `> npm run build`
 1. Run the __start__ command `> npm start`
+
+:rotating_light: __Note__ :rotating_light:
+
+The project also includes the __build-start__ command, which runs __build__ and __start__ `> npm run build-start` :eyes:
 
 [CODE_OF_CONDUCT]: .github/code_of_conduct.md
 [CODIGO_DE_CONDUCTA]: .github/codigo_de_conducta.md
