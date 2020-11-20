@@ -8,7 +8,7 @@ Una herramienta para ayudar move y migrar un tablero de proyecto de un repositor
 
 ### Código de Conducta
 
-Este projecto de adhiere al contributors covenant. Pueden leer la version en espñol [aqui][CODIGO_DE_CONDUCTA].
+Este projecto de adhiere al contributors covenant. Pueden leer la version en español [aqui][CODIGO_DE_CONDUCTA].
 
 ### Como contribuir
 
