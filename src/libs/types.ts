@@ -148,3 +148,10 @@ export interface GetRepoProjectInput extends RequestParameters {
   repo: string;
   projectNumber: number;
 }
+
+export enum GraphQlQueries {
+  ADD_PROJECT_CARD = "add-project-card.graphql",
+  GET_ORG_PROJECT = "get-org-project.graphql",
+  GET_REPO_PROJECT = "get-repo-project.graphql",
+  ADD_PROJECT_COLUMN = "add-project-column.graphql"
+}

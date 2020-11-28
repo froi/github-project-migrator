@@ -1,0 +1,8 @@
+query ($org: String!, $projectNumber: Int!){
+  organization(login:$org) {
+    project(number:$projectNumber) {
+      id
+      name
+    }
+  }
+}

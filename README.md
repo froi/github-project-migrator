@@ -14,6 +14,7 @@ Este projecto de adhiere al contributors covenant. Pueden leer la version en esp
 
 Por favor lea [nuestro documento](CONTRIBUTING.md) de como contribuir a este proyecto.
 
+Tambien puedes seguir [este tablero](https://github.com/froi/github-project-migrator/projects/1) para ver en que se esta trabajando.
 ### Como correr este proyecto
 
 #### Pre requisitos
@@ -46,6 +47,7 @@ This project adheres to the contributors covenant. You can read the English vers
 
 Please read [our document](CONTIBUTING.MD) on how to contribute to this project.
 
+You can also take a look at [our project board](https://github.com/froi/github-project-migrator/projects/1) to see what's being worked on and what isn't.
 ### How to run this project
 
 #### Prerequisites

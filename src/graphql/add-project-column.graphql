@@ -1,0 +1,13 @@
+mutation($projectId: ID!, $columnName: String! ) {
+  addProjectColumn(input: { name: $columnName, projectId: $projectId }) {
+    columnEdge {
+      node {
+        id
+        name
+      }
+    }
+    project {
+      id
+    }
+  }
+}
