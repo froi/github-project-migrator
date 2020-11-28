@@ -1,0 +1,28 @@
+query ($owner: String!, $repo: String!, $projectNumber: Int!){
+  repository(name:$repo, owner:$owner) {
+    project(number:$projectNumber) {
+      name
+      columns(first:100){
+        nodes {
+          name
+          cards(first:100){
+            nodes {
+              note
+              content {
+                __typename
+                ...on Issue {
+                  id
+                  number
+                }
+                ...on PullRequest {
+                  id
+                  number
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

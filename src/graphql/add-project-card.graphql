@@ -1,0 +1,12 @@
+mutation($contentId: ID, $note: String, $projectColumnId: ID! ) {
+    addProjectCard(input: { contentId: $contentId, note: $note, projectColumnId: $projectColumnId }) {
+      cardEdge {
+        node {
+          id
+        }
+      }
+      projectColumn {
+        id
+      }
+    }
+  }
