@@ -78,7 +78,8 @@ export interface ProjectCard {
     number: number;
   };
 }
-export interface RepoProjectColumns {
+export interface ProjectColumns {
+  id: ID;
   name: string;
   cards: {
     nodes: ProjectCard[];
