@@ -5,21 +5,6 @@ export type ID = string;
 export type URI = string;
 export type DateTime = Date;
 
-// export interface ProjectCard {
-//     column: ProjectColumn;
-//     content: ProjectCardItem;
-//     createdAt: DateTime;
-//     creator: Actor;
-//     databaseId: number;
-//     id: ID;
-//     isArchived: Boolean;
-//     note: String;
-//     project: Project;
-//     resourcePath: URI;
-//     state: ProjectCardState;
-//     updatedAt: DateTime;
-//     url: URI;
-// }
 export interface ProjectColumn {
   createdAt: DateTime;
   databaseId: number;
@@ -78,30 +63,29 @@ export interface ProjectCard {
     number: number;
   };
 }
-export interface RepoProjectColumns {
+export interface ProjectColumns {
+  id: ID;
   name: string;
   cards: {
     nodes: ProjectCard[];
   };
 }
 
+export interface ProjectResponse {
+  id: ID;
+  name: string;
+  columns: {
+    nodes: ProjectColumns[];
+  };
+}
 export interface GetRepoProjectResponse {
   repository: {
-    project: {
-      id: ID;
-      name: string;
-      columns: {
-        nodes: RepoProjectColumns[];
-      };
-    };
+    project: ProjectResponse;
   };
 }
 export interface GetOrgProjectResponse {
   organization: {
-    project: {
-      id: ID;
-      name: string;
-    };
+    project: ProjectResponse;
   };
 }
 export interface AddProjectColumnResponse {
@@ -122,10 +106,27 @@ export interface AddProjectCardResponse {
     cardEdge?: {
       node: {
         id: ID;
+        column: {
+          id: ID;
+          name: string;
+          url: string;
+          project: {
+            id: ID;
+            name: string;
+            url: string;
+          }
+        };
+        creator: {
+          url: string;
+          login: string;
+        };
+        note?: string;
+        content?: {
+          url: string;
+          title: string;
+          number: number;
+        }
       };
-    };
-    projectColumn?: {
-      id: ID;
     };
   };
 }
@@ -154,4 +155,34 @@ export enum GraphQlQueries {
   GET_ORG_PROJECT = "get-org-project.graphql",
   GET_REPO_PROJECT = "get-repo-project.graphql",
   ADD_PROJECT_COLUMN = "add-project-column.graphql"
+}
+
+export enum WorkItemType {
+  REPO,
+  ORG
+}
+export interface Repo {
+  name: string;
+  owner: string;
+}
+export interface Org {
+  name: string;
+}
+export interface WorkItem {
+  project: number;
+  type: WorkItemType
+  value: Repo | Org;
+}
+
+export interface DefaultCliAnswers {
+  source: string;
+  sourceProjectNumber: string;
+  target: string;
+  targetProjectNumber: string;
+}
+
+export interface OrgToOrgCliAnswers {
+   org: string;
+   sourceProjectNumber: string;
+   targetProjectNumber: string;
 }

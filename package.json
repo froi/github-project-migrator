@@ -2,12 +2,14 @@
   "name": "gh-project-migrator",
   "version": "1.0.1",
   "description": "Helper script to migrate columns and crads from a GitHub project to another.",
-  "main": "dist/index.js",
+  "main": "dist/cli.js",
   "dependencies": {
     "@octokit/graphql": "^4.5.7",
-    "@octokit/types": "^2.16.2"
+    "inquirer": "^7.3.3"
   },
   "devDependencies": {
+    "@octokit/types": "^2.16.2",
+    "@types/inquirer": "^7.3.1",
     "@types/jest": "^25.2.3",
     "@types/node": "^13.13.31",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
@@ -31,7 +33,7 @@
     "lint-fix": "eslint src/**/*.ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postversion": "git push && git push --tags",
-    "start": "node dist/main.js",
+    "start": "node dist/cli.js",
     "build-start": "npm run build && npm start"
   },
   "husky": {

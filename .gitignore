@@ -90,5 +90,5 @@ playground.js
 .\#*
 
 # Output directory
-dist/**/*.map
-dist/**/*.d.ts
+dist/
+
