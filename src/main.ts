@@ -11,7 +11,12 @@ import {
   GetOrgProjectResponse,
   GetRepoProjectResponse,
   ID,
-  GraphQlQueries
+  GraphQlQueries,
+  WorkItem,
+  WorkItemType,
+  Repo,
+  Org,
+  ProjectResponse
 } from './libs/types';
 import {getGraphqlQuery} from './libs/utils';
 
