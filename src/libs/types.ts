@@ -155,3 +155,33 @@ export enum GraphQlQueries {
   GET_REPO_PROJECT = "get-repo-project.graphql",
   ADD_PROJECT_COLUMN = "add-project-column.graphql"
 }
+
+export enum WorkItemType {
+  REPO,
+  ORG
+}
+export interface Repo {
+  name: string;
+  owner: string;
+}
+export interface Org {
+  name: string;
+}
+export interface WorkItem {
+  project: number;
+  type: WorkItemType
+  value: Repo | Org;
+}
+
+export interface DefaultCliAnswers {
+  source: string;
+  sourceProjectNumber: string;
+  target: string;
+  targetProjectNumber: string;
+}
+
+export interface OrgToOrgCliAnswers {
+   org: string;
+   sourceProjectNumber: string;
+   targetProjectNumber: string;
+}
