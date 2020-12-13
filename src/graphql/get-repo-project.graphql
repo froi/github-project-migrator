@@ -1,9 +1,11 @@
 query ($owner: String!, $repo: String!, $projectNumber: Int!){
   repository(name:$repo, owner:$owner) {
     project(number:$projectNumber) {
+      id
       name
       columns(first:100){
         nodes {
+          id
           name
           cards(first:100){
             nodes {

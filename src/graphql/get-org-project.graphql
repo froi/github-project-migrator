@@ -3,6 +3,28 @@ query ($org: String!, $projectNumber: Int!){
     project(number:$projectNumber) {
       id
       name
+      columns(first:100){
+        nodes {
+          id
+          name
+          cards(first:100){
+            nodes {
+              note
+              content {
+                __typename
+                ...on Issue {
+                  id
+                  number
+                }
+                ...on PullRequest {
+                  id
+                  number
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

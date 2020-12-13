@@ -1,12 +1,36 @@
 mutation($contentId: ID, $note: String, $projectColumnId: ID! ) {
-    addProjectCard(input: { contentId: $contentId, note: $note, projectColumnId: $projectColumnId }) {
-      cardEdge {
-        node {
+  addProjectCard(input: { contentId: $contentId, note: $note, projectColumnId: $projectColumnId }) {
+    cardEdge {
+      node {
+        column {
           id
+          name
+          url
+          project {
+            id
+            name
+            url
+          }
         }
-      }
-      projectColumn {
         id
+        creator {
+          url
+          login
+        }
+        note
+        content {
+          ...on Issue {
+            url
+            title
+            number
+          }
+          ...on PullRequest {
+            url
+            title
+            number
+          }
+        }
       }
     }
   }
+}
