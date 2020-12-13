@@ -47,69 +47,75 @@ async function getRepoProject(input: GetRepoProjectInput): Promise<GetRepoProjec
   const result: GetRepoProjectResponse = await graphqlWithAuth(query, input);
   return result;
 }
-async function main(): Promise<void> {
-  const org: string | undefined = process.env.GITHUB_ORG;
-  const sourceRepo: string | undefined = process.env.SOURCE_REPO;
-  const sourceProjectNumber: string = process.env.SOURCE_PROJECT_NUMBER || '';
-  const targetProjectNumber: string = process.env.TARGET_PROJECT_NUMBER || '';
 
-  if (!org) {
-    throw Error("[ERROR] organization doesn't have a value.");
-  }
-  if (!sourceRepo) {
-    throw Error("[ERROR] sourceRepo doesn't have a value.");
-  }
-  if (!sourceProjectNumber) {
-    throw Error("[ERROR] sourceProjectNumber doesn't have a value.");
-  }
-  if (!targetProjectNumber) {
-    throw Error("[ERROR] targetProjectNumber doesn't have a value.");
-  }
-  const repoProjectInput: GetRepoProjectInput = {
-    owner: org,
-    projectNumber: parseInt(sourceProjectNumber),
-    repo: sourceRepo
-  } as GetRepoProjectInput;
-  const orgProjectInput: GetOrgProjectInput = {
-    org,
-    projectNumber: parseInt(targetProjectNumber)
-  } as GetOrgProjectInput;
-  const orgProjectResponse: GetOrgProjectResponse = await getOrgProject(orgProjectInput);
-  const {id: targetProjectId} = orgProjectResponse.organization.project;
+async function getProjectData(item: WorkItem): Promise<ProjectResponse> {
 
-  const repoProjectResponse: GetRepoProjectResponse = await getRepoProject(repoProjectInput);
-  const {columns} = repoProjectResponse.repository.project;
+  switch(item.type) {
+    case WorkItemType.REPO:
+      {
+        const {owner, name} = item.value as Repo;
+        const input: GetRepoProjectInput = {
+          owner: owner,
+          repo: name,
+          projectNumber: item.project
+        } as GetRepoProjectInput;
+        const sourceProjectResponse: GetRepoProjectResponse = await getRepoProject(input);
+        return sourceProjectResponse.repository.project;
+      }
+    case WorkItemType.ORG:
+      {
+        const input: GetOrgProjectInput = {
+          org: (item.value as Org).name,
+          projectNumber: item.project
+        } as GetOrgProjectInput;
+        const sourceProjectResponse: GetOrgProjectResponse = await getOrgProject(input);
+        return sourceProjectResponse.organization.project;
+      }
+  }
+}
+export async function* migrate(source: WorkItem, target: WorkItem): AsyncGenerator<AddProjectCardResponse> {
 
-  for (const column of columns.nodes) {
-    const cards = column.cards.nodes;
-    const input: AddProjectColumnInput = {
-      columnName: column.name,
-      projectId: targetProjectId
-    } as AddProjectColumnInput;
-    let targetColumnResponse: AddProjectColumnResponse;
-    try {
-      targetColumnResponse = await addProjectColumn(input);
-    } catch (error) {
-      console.error(`[ERROR] There was an error adding a project column`, error);
-      continue;
+  // Get all the column data for our source project
+  const sourceProject = await getProjectData(source);
+  const {columns: sourceColumns} = sourceProject;
+
+  // Get all the column data for our target project along with the project ID
+  // The project ID is needed later on to add missing columns (if needed)
+  const targetProject = await getProjectData(target);
+  const {id: targetProjectId, columns: targetColumns} = targetProject;
+
+  for (const sourceColumn of sourceColumns.nodes) {
+    let targetColumnId: string;
+
+    // Filter targetColumns array to the column that matches the name of the current source column
+    // This is later used to determine if we need to add the column to the target project.
+    const filteredTargetColumns = targetColumns.nodes.filter(column => column.name === sourceColumn.name);
+    if(filteredTargetColumns.length === 0) {
+      try {
+        const input: AddProjectColumnInput = {
+          columnName: sourceColumn.name,
+          projectId: targetProjectId
+        } as AddProjectColumnInput;
+        targetColumnId = (await addProjectColumn(input)).addProjectColumn.columnEdge.node.id;
+      } catch (error) {
+        console.error(`[ERROR] There was an error adding a project column`, error);
+        continue;
+      }
+    } else {
+      targetColumnId = filteredTargetColumns[0].id;
     }
+
+    const cards = sourceColumn.cards.nodes;
     for (const card of cards) {
       const cardContentId: ID | null = card.content ? card.content.id : null;
       const cardNote: string | null = card.note ? card.note : null;
       const addProjectCardInput: AddProjectCardInput = {
         contentId: cardContentId,
         note: cardNote,
-        projectColumnId: targetColumnResponse.addProjectColumn.columnEdge.node.id
+        projectColumnId: targetColumnId
       };
       const addProjectCardResponse: AddProjectCardResponse = await addProjectCard(addProjectCardInput);
-
-      console.log(`Project Card added: ${addProjectCardResponse}`);
+      yield addProjectCardResponse;
     }
   }
 }
-
-if(require.main === module) {
-  main();
-}
-
-module.exports = main;
