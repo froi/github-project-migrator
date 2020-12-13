@@ -85,23 +85,21 @@ export interface RepoProjectColumns {
   };
 }
 
+export interface ProjectResponse {
+  id: ID;
+  name: string;
+  columns: {
+    nodes: ProjectColumns[];
+  };
+}
 export interface GetRepoProjectResponse {
   repository: {
-    project: {
-      id: ID;
-      name: string;
-      columns: {
-        nodes: RepoProjectColumns[];
-      };
-    };
+    project: ProjectResponse;
   };
 }
 export interface GetOrgProjectResponse {
   organization: {
-    project: {
-      id: ID;
-      name: string;
-    };
+    project: ProjectResponse;
   };
 }
 export interface AddProjectColumnResponse {
