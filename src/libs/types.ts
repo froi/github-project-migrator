@@ -127,8 +127,6 @@ export interface AddProjectCardResponse {
           number: number;
         }
       };
-    projectColumn?: {
-      id: ID;
     };
   };
 }
