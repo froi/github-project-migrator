@@ -5,21 +5,6 @@ export type ID = string;
 export type URI = string;
 export type DateTime = Date;
 
-// export interface ProjectCard {
-//     column: ProjectColumn;
-//     content: ProjectCardItem;
-//     createdAt: DateTime;
-//     creator: Actor;
-//     databaseId: number;
-//     id: ID;
-//     isArchived: Boolean;
-//     note: String;
-//     project: Project;
-//     resourcePath: URI;
-//     state: ProjectCardState;
-//     updatedAt: DateTime;
-//     url: URI;
-// }
 export interface ProjectColumn {
   createdAt: DateTime;
   databaseId: number;
