@@ -122,8 +122,27 @@ export interface AddProjectCardResponse {
     cardEdge?: {
       node: {
         id: ID;
+        column: {
+          id: ID;
+          name: string;
+          url: string;
+          project: {
+            id: ID;
+            name: string;
+            url: string;
+          }
+        };
+        creator: {
+          url: string;
+          login: string;
+        };
+        note?: string;
+        content?: {
+          url: string;
+          title: string;
+          number: number;
+        }
       };
-    };
     projectColumn?: {
       id: ID;
     };
