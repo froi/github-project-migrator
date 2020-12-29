@@ -1,7 +1,10 @@
 import path from 'path';
 import fs from 'fs';
-import { Repo } from './types';
+import os from 'os';
+import { Repo, Config, HostConfig } from './types';
+import yaml from 'yaml';
 
+const CONFIG_FILE_PATH = path.join(os.homedir(), '.github-project-migrator');
 const GRAPHQL_QUERIES_PATH = path.join(path.dirname(__dirname), 'graphql');
 
 /**
@@ -46,4 +49,48 @@ export function splitRepo(repo: string): Repo {
     owner,
     name
   };
+}
+
+export async function wait(seconds: number): Promise<string> {
+  return new Promise(resolve => {
+    setTimeout(() => resolve('done!'), seconds * 1000);
+  });
+}
+
+export function getConfig(gitHubHost: string | null = null): Config | HostConfig | null {
+  try {
+    const config = fs.readFileSync(CONFIG_FILE_PATH).toString();
+    const parsedConfig: Config = yaml.parse(config);
+
+    if(parsedConfig) {
+      if(gitHubHost && gitHubHost in parsedConfig) {
+        return parsedConfig[gitHubHost];
+      }
+      return parsedConfig;
+    }
+    return null;
+  } catch(error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export function writeConfig(gitHubHost = 'github.com', config: HostConfig): void {
+  let currentConfig: Config | null = null;
+  try {
+    currentConfig = getConfig() as Config;
+  } catch(error) {
+    console.log('Config file not found and that is ok.');
+  }
+  if(currentConfig) {
+    currentConfig[gitHubHost] = config;
+  } else {
+    currentConfig = {};
+    currentConfig[gitHubHost] = config;
+  }
+  try {
+    fs.writeFileSync(CONFIG_FILE_PATH, yaml.stringify(currentConfig));
+  } catch(error) {
+    throw new Error(`Error while writing config file - ${error}`);
+  }
 }
