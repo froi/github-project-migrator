@@ -19,13 +19,7 @@ import {
   ProjectResponse
 } from './libs/types';
 import {getGraphqlQuery} from './libs/utils';
-
-dotenv.config();
-const graphqlWithAuth = graphql.defaults({
-  headers: {
-    authorization: `token ${process.env.GITHUB_TOKEN}`
-  }
-});
+import * as GitHub from './libs/github';
 
 async function addProjectColumn(input: AddProjectColumnInput): Promise<AddProjectColumnResponse> {
   const mutation = getGraphqlQuery(GraphQlQueries.ADD_PROJECT_COLUMN);
