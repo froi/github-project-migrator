@@ -1,7 +1,7 @@
 {
   "name": "gh-project-migrator",
   "version": "1.0.1",
-  "description": "Helper script to migrate columns and crads from a GitHub project to another.",
+  "description": "Application that helps you move your GitHub project boards between repositories and organizations.",
   "main": "dist/cli.js",
   "dependencies": {
     "@octokit/graphql": "^4.5.7",
