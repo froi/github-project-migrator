@@ -1,6 +1,3 @@
-import * as dotenv from 'dotenv';
-
-import {graphql} from '@octokit/graphql';
 import {
   AddProjectCardInput,
   AddProjectCardResponse,
