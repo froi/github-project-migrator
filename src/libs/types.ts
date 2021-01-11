@@ -103,7 +103,7 @@ export interface AddProjectColumnResponse {
 }
 export interface AddProjectCardResponse {
   addProjectCard: {
-    cardEdge?: {
+    cardEdge: {
       node: {
         id: ID;
         column: {
