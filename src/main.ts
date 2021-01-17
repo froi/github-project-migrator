@@ -18,24 +18,27 @@ import {
 import {getGraphqlQuery} from './libs/utils';
 import {createClient} from './libs/github';
 import { graphql as GraphQL } from '@octokit/graphql/dist-types/types';
+import path from "path";
+
+const GRAPHQL_QUERIES_PATH = path.join(path.dirname(__filename), 'graphql');
 
 async function addProjectColumn(input: AddProjectColumnInput, gitHubClient: GraphQL): Promise<AddProjectColumnResponse> {
-  const mutation = getGraphqlQuery(GraphQlQueries.ADD_PROJECT_COLUMN);
+  const mutation = getGraphqlQuery(GRAPHQL_QUERIES_PATH, GraphQlQueries.ADD_PROJECT_COLUMN);
   const result: AddProjectColumnResponse = await gitHubClient(mutation, input);
   return result;
 }
 async function addProjectCard(input: AddProjectCardInput, gitHubClient: GraphQL): Promise<AddProjectCardResponse> {
-  const mutation = getGraphqlQuery(GraphQlQueries.ADD_PROJECT_CARD);
+  const mutation = getGraphqlQuery(GRAPHQL_QUERIES_PATH, GraphQlQueries.ADD_PROJECT_CARD);
   const result: AddProjectCardResponse = await gitHubClient(mutation, input);
   return result;
 }
 async function getOrgProject(input: GetOrgProjectInput, gitHubClient: GraphQL): Promise<GetOrgProjectResponse> {
-  const query = getGraphqlQuery(GraphQlQueries.GET_ORG_PROJECT);
+  const query = getGraphqlQuery(GRAPHQL_QUERIES_PATH, GraphQlQueries.GET_ORG_PROJECT);
   const result: GetOrgProjectResponse = await gitHubClient(query, input);
   return result;
 }
 async function getRepoProject(input: GetRepoProjectInput, gitHubClient: GraphQL): Promise<GetRepoProjectResponse> {
-  const query = getGraphqlQuery(GraphQlQueries.GET_REPO_PROJECT);
+  const query = getGraphqlQuery(GRAPHQL_QUERIES_PATH, GraphQlQueries.GET_REPO_PROJECT);
   const result: GetRepoProjectResponse = await gitHubClient(query, input);
   return result;
 }
