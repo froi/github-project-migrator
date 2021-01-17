@@ -8,7 +8,7 @@ import {migrate} from './main';
 import {auth} from './libs/auth';
 import {program} from 'commander';
 
-async function repoToOrg(): Promise<void> {
+async function repoToOrg(gitHubHost: string): Promise<void> {
   const answers: DefaultCliAnswers | OrgToOrgCliAnswers = await inquirer.prompt(prompts.REPO_TO_ORG_PROMPTS) as DefaultCliAnswers;
   const source: WorkItem = {
     type: WorkItemType.REPO,
@@ -22,11 +22,14 @@ async function repoToOrg(): Promise<void> {
     },
     project: parseInt(answers.targetProjectNumber)
   };
-  for await(const result of migrate(source, target)){
-    console.log(JSON.stringify(result, null, 2));
+  for await(const result of migrate(source, target, gitHubHost)){
+    const column = result.addProjectCard.cardEdge?.node.column;
+    const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
+
+    console.log(messsage);
   }
 }
-async function orgToRepo(): Promise<void> {
+async function orgToRepo(gitHubHost: string): Promise<void> {
   const answers: DefaultCliAnswers | OrgToOrgCliAnswers = await inquirer.prompt(prompts.ORG_TO_REPO_PROMPTS) as DefaultCliAnswers;
   const source: WorkItem = {
     type: WorkItemType.ORG,
@@ -40,11 +43,14 @@ async function orgToRepo(): Promise<void> {
     value: splitRepo(answers.target),
     project: parseInt(answers.targetProjectNumber)
   };
-  for await(const result of migrate(source, target)){
-    console.log(JSON.stringify(result, null, 2));
+  for await(const result of migrate(source, target, gitHubHost)){
+    const column = result.addProjectCard.cardEdge?.node.column;
+    const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
+
+    console.log(messsage);
   }
 }
-async function repoToRepo(): Promise<void> {
+async function repoToRepo(gitHubHost: string): Promise<void> {
   const answers: DefaultCliAnswers | OrgToOrgCliAnswers = await inquirer.prompt(prompts.REPO_TO_REPO_PROMPTS) as DefaultCliAnswers;
   const source: WorkItem = {
     type: WorkItemType.REPO,
@@ -56,11 +62,14 @@ async function repoToRepo(): Promise<void> {
     value: splitRepo(answers.target),
     project: parseInt(answers.targetProjectNumber)
   };
-  for await(const result of migrate(source, target)){
-    console.log(JSON.stringify(result, null, 2));
+  for await(const result of migrate(source, target, gitHubHost)){
+    const column = result.addProjectCard.cardEdge?.node.column;
+    const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
+
+    console.log(messsage);
   }
 }
-async function orgToOrg(): Promise<void> {
+async function orgToOrg(gitHubHost: string): Promise<void> {
   const answers: DefaultCliAnswers | OrgToOrgCliAnswers = await inquirer.prompt(prompts.ORG_TO_ORG_PROMPTS) as OrgToOrgCliAnswers;
   const source: WorkItem = {
     type: WorkItemType.ORG,
@@ -76,28 +85,40 @@ async function orgToOrg(): Promise<void> {
     },
     project: parseInt(answers.targetProjectNumber)
   };
-  for await(const result of migrate(source, target)){
-    console.log(JSON.stringify(result, null, 2));
+  for await(const result of migrate(source, target, gitHubHost)){
+    const column = result.addProjectCard.cardEdge?.node.column;
+    const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
+
+    console.log(messsage);
   }
 }
+
 async function main(): Promise<void> {
+
   program
     .command('migrate')
     .action(async () => {
+      const gitHubHost = 'github.com';
+      let config = getConfig(gitHubHost);
+
+      if(!config || !config.oauth_token) {
+        config = await auth(gitHubHost);
+      }
+
       const { action } = await inquirer.prompt(prompts.ACTIONS_PROMPTS);
 
       switch(action) {
         case ActionsTypes.REPO_TO_ORG:
-          await repoToOrg();
+          await repoToOrg(gitHubHost);
           break;
         case ActionsTypes.ORG_TO_REPO:
-          await orgToRepo();
+          await orgToRepo(gitHubHost);
           break;
         case ActionsTypes.REPO_TO_REPO:
-          await repoToRepo();
+          await repoToRepo(gitHubHost);
           break;
         case ActionsTypes.ORG_TO_ORG:
-          await orgToOrg();
+          await orgToOrg(gitHubHost);
           break;
         default:
           console.log("Nope");
@@ -111,7 +132,6 @@ async function main(): Promise<void> {
         let execAuth = true;
 
         if(config && config.oauth_token) {
-          // Change to use prompt
           const {reAuth} = await inquirer.prompt([{
             type: 'confirm',
             message: `You've already authenticated. Do you wish to do so again?`,
@@ -119,7 +139,6 @@ async function main(): Promise<void> {
           }]) as { reAuth: boolean};
           execAuth = reAuth;
         }
-
         if( execAuth ) {
           await auth(gitHubHost);
         }
