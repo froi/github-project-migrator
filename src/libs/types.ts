@@ -103,7 +103,7 @@ export interface AddProjectColumnResponse {
 }
 export interface AddProjectCardResponse {
   addProjectCard: {
-    cardEdge?: {
+    cardEdge: {
       node: {
         id: ID;
         column: {
@@ -185,4 +185,58 @@ export interface OrgToOrgCliAnswers {
    org: string;
    sourceProjectNumber: string;
    targetProjectNumber: string;
+}
+
+export enum ActionsTypes {
+  REPO_TO_ORG = "repoToOrg",
+  ORG_TO_REPO = "orgToRepo",
+  REPO_TO_REPO = "repoToRepo",
+  ORG_TO_ORG = "orgToOrg"
+}
+
+export interface DeviceCodeResponse {
+  deviceCode: string;
+  userCode: string;
+  verificationUri: string;
+  deviceCodeExpirseIn: Date;
+  deviceCodeRequestInterval: number;
+}
+
+interface AccessToken {
+  token: string;
+  type: string;
+  scope: string;
+}
+export interface VerifyDeviceAuthorizationResponse {
+  isAuthorized: boolean;
+  accessToken: AccessToken | null;
+}
+
+export enum AccessTokenErrors {
+  AUTHORIZATION_PENDING = "authorization_pending",
+  SLOW_DOWN = "slow_down",
+  EXPIRED_TOKEN = "expired_token",
+  UNSUPPORTED_GRANT_TYPE = "unsupported_grant_type",
+  INCORRECT_CLIENT_CREDENTIALS = "incorrect_client_credentials",
+  INCORRECT_DEVICE_CODE = "incorrect_device_code",
+  ACCESS_DENIED = "access_denied"
+}
+export interface AccessTokenErrorResponse {
+  error: AccessTokenErrors;
+  error_description: string;
+  error_url: string;
+}
+
+export interface AccessTokenResponse {
+  access_token: string;
+  token_type: string;
+  scope: string;
+}
+
+export interface HostConfig {
+  oauth_token: string;
+  user: string;
+}
+export interface Config {
+  [host: string]: HostConfig
 }

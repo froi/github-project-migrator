@@ -1,23 +1,32 @@
 {
   "name": "gh-project-migrator",
   "version": "1.0.1",
-  "description": "Helper script to migrate columns and crads from a GitHub project to another.",
+  "description": "Application that helps you move your GitHub project boards between repositories and organizations.",
   "main": "dist/cli.js",
+  "bin": {
+    "gh-project-migrator": "dist/cli.js"
+  },
   "dependencies": {
     "@octokit/graphql": "^4.5.7",
-    "inquirer": "^7.3.3"
+    "commander": "^6.2.0",
+    "date-fns": "^2.16.1",
+    "inquirer": "^7.3.3",
+    "node-fetch": "^2.6.1",
+    "open": "^7.3.0",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@octokit/types": "^2.16.2",
     "@types/inquirer": "^7.3.1",
     "@types/jest": "^25.2.3",
     "@types/node": "^13.13.31",
-    "@typescript-eslint/eslint-plugin": "^2.34.0",
-    "@typescript-eslint/parser": "^2.34.0",
+    "@types/node-fetch": "^2.5.7",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
     "copyfiles": "^2.4.1",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-jest": "^23.20.0",
+    "eslint": "^7.16.0",
+    "eslint-plugin-jest": "^24.1.3",
     "jest": "^25.5.4",
     "lint-staged": "^10.5.1",
     "prettier": "^2.1.2",
