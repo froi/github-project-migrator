@@ -23,7 +23,7 @@ async function repoToOrg(gitHubHost: string): Promise<void> {
     project: parseInt(answers.targetProjectNumber)
   };
   for await(const result of migrate(source, target, gitHubHost)){
-    const column = result.addProjectCard.cardEdge?.node.column;
+    const column = result.addProjectCard.cardEdge.node.column;
     const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
 
     console.log(messsage);
@@ -44,7 +44,7 @@ async function orgToRepo(gitHubHost: string): Promise<void> {
     project: parseInt(answers.targetProjectNumber)
   };
   for await(const result of migrate(source, target, gitHubHost)){
-    const column = result.addProjectCard.cardEdge?.node.column;
+    const column = result.addProjectCard.cardEdge.node.column;
     const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
 
     console.log(messsage);
@@ -63,7 +63,7 @@ async function repoToRepo(gitHubHost: string): Promise<void> {
     project: parseInt(answers.targetProjectNumber)
   };
   for await(const result of migrate(source, target, gitHubHost)){
-    const column = result.addProjectCard.cardEdge?.node.column;
+    const column = result.addProjectCard.cardEdge.node.column;
     const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
 
     console.log(messsage);
@@ -86,7 +86,7 @@ async function orgToOrg(gitHubHost: string): Promise<void> {
     project: parseInt(answers.targetProjectNumber)
   };
   for await(const result of migrate(source, target, gitHubHost)){
-    const column = result.addProjectCard.cardEdge?.node.column;
+    const column = result.addProjectCard.cardEdge.node.column;
     const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
 
     console.log(messsage);
