@@ -5,15 +5,14 @@ import { Repo, Config, HostConfig } from './types';
 import yaml from 'yaml';
 
 const CONFIG_FILE_PATH = path.join(os.homedir(), '.github-project-migrator');
-const GRAPHQL_QUERIES_PATH = path.join(path.dirname(__dirname), 'graphql');
 
 /**
  *
  * @param fileName Name of the GraphQL query file
  * @returns Contents of the supplied file
  */
-export function getGraphqlQuery(fileName: string): string {
-  const queryPath = path.join(GRAPHQL_QUERIES_PATH, fileName);
+export function getGraphqlQuery(graphqlQueriesPath: string, fileName: string): string {
+  const queryPath = path.join(graphqlQueriesPath, fileName);
 
   try {
     return  fs.readFileSync(queryPath, {encoding: 'utf-8', flag: 'r'}).toString();
