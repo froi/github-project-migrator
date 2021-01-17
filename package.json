@@ -2,10 +2,16 @@
   "name": "gh-project-migrator",
   "version": "1.1.0",
   "description": "Application that helps you move your GitHub project boards between repositories and organizations.",
-  "main": "dist/cli.js",
+  "main": "dist/index.js",
   "bin": {
-    "gh-project-migrator": "dist/cli.js"
+    "gh-project-migrator": "dist/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "@octokit/graphql": "^4.5.7",
     "commander": "^6.2.0",
@@ -66,9 +72,10 @@
   "keywords": [
     "github",
     "projects",
-    "migration"
+    "migration",
+    "cli"
   ],
-  "author": "Froilan Irizarry Rivera",
+  "author": "Froilán Irizarry Rivera",
   "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/froi/gh-project-migrator/issues"
