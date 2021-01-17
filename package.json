@@ -23,6 +23,7 @@
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
+    "@vercel/ncc": "^0.27.0",
     "copyfiles": "^2.4.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.16.0",
@@ -35,15 +36,16 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
-    "build": "rimraf dist && tsc -b && copyfiles -Vu 1 src/graphql/**/* dist",
+    "build": "rimraf build && tsc -b && copyfiles -Vu 1 src/graphql/**/* build",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint src/**/*.ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postversion": "git push && git push --tags",
-    "start": "node dist/cli.js",
-    "build-start": "npm run build && npm start"
+    "start": "node build/cli.js",
+    "build-start": "npm run build && npm start",
+    "package": "ncc build --source-map src/cli.ts -o dist && copyfiles -Vu 1 build/graphql/**/* dist"
   },
   "husky": {
     "hooks": {
