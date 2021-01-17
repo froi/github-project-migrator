@@ -16,30 +16,31 @@ import {
   ProjectResponse
 } from './libs/types';
 import {getGraphqlQuery} from './libs/utils';
-import * as GitHub from './libs/github';
+import {createClient} from './libs/github';
+import { graphql as GraphQL } from '@octokit/graphql/dist-types/types';
 
-async function addProjectColumn(input: AddProjectColumnInput): Promise<AddProjectColumnResponse> {
+async function addProjectColumn(input: AddProjectColumnInput, gitHubClient: GraphQL): Promise<AddProjectColumnResponse> {
   const mutation = getGraphqlQuery(GraphQlQueries.ADD_PROJECT_COLUMN);
-  const result: AddProjectColumnResponse = await graphqlWithAuth(mutation, input);
+  const result: AddProjectColumnResponse = await gitHubClient(mutation, input);
   return result;
 }
-async function addProjectCard(input: AddProjectCardInput): Promise<AddProjectCardResponse> {
+async function addProjectCard(input: AddProjectCardInput, gitHubClient: GraphQL): Promise<AddProjectCardResponse> {
   const mutation = getGraphqlQuery(GraphQlQueries.ADD_PROJECT_CARD);
-  const result: AddProjectCardResponse = await graphqlWithAuth(mutation, input);
+  const result: AddProjectCardResponse = await gitHubClient(mutation, input);
   return result;
 }
-async function getOrgProject(input: GetOrgProjectInput): Promise<GetOrgProjectResponse> {
+async function getOrgProject(input: GetOrgProjectInput, gitHubClient: GraphQL): Promise<GetOrgProjectResponse> {
   const query = getGraphqlQuery(GraphQlQueries.GET_ORG_PROJECT);
-  const result: GetOrgProjectResponse = await graphqlWithAuth(query, input);
+  const result: GetOrgProjectResponse = await gitHubClient(query, input);
   return result;
 }
-async function getRepoProject(input: GetRepoProjectInput): Promise<GetRepoProjectResponse> {
+async function getRepoProject(input: GetRepoProjectInput, gitHubClient: GraphQL): Promise<GetRepoProjectResponse> {
   const query = getGraphqlQuery(GraphQlQueries.GET_REPO_PROJECT);
-  const result: GetRepoProjectResponse = await graphqlWithAuth(query, input);
+  const result: GetRepoProjectResponse = await gitHubClient(query, input);
   return result;
 }
 
-async function getProjectData(item: WorkItem): Promise<ProjectResponse> {
+async function getProjectData(item: WorkItem, gitHubClient: GraphQL): Promise<ProjectResponse> {
 
   switch(item.type) {
     case WorkItemType.REPO:
@@ -50,7 +51,7 @@ async function getProjectData(item: WorkItem): Promise<ProjectResponse> {
           repo: name,
           projectNumber: item.project
         } as GetRepoProjectInput;
-        const sourceProjectResponse: GetRepoProjectResponse = await getRepoProject(input);
+        const sourceProjectResponse: GetRepoProjectResponse = await getRepoProject(input, gitHubClient);
         return sourceProjectResponse.repository.project;
       }
     case WorkItemType.ORG:
@@ -59,20 +60,21 @@ async function getProjectData(item: WorkItem): Promise<ProjectResponse> {
           org: (item.value as Org).name,
           projectNumber: item.project
         } as GetOrgProjectInput;
-        const sourceProjectResponse: GetOrgProjectResponse = await getOrgProject(input);
+        const sourceProjectResponse: GetOrgProjectResponse = await getOrgProject(input, gitHubClient);
         return sourceProjectResponse.organization.project;
       }
   }
 }
-export async function* migrate(source: WorkItem, target: WorkItem): AsyncGenerator<AddProjectCardResponse> {
+export async function* migrate(source: WorkItem, target: WorkItem, gitHubHost: string): AsyncGenerator<AddProjectCardResponse> {
 
+  const gitHubClient = createClient(gitHubHost);
   // Get all the column data for our source project
-  const sourceProject = await getProjectData(source);
+  const sourceProject = await getProjectData(source, gitHubClient);
   const {columns: sourceColumns} = sourceProject;
 
   // Get all the column data for our target project along with the project ID
   // The project ID is needed later on to add missing columns (if needed)
-  const targetProject = await getProjectData(target);
+  const targetProject = await getProjectData(target, gitHubClient);
   const {id: targetProjectId, columns: targetColumns} = targetProject;
 
   for (const sourceColumn of sourceColumns.nodes) {
@@ -87,7 +89,7 @@ export async function* migrate(source: WorkItem, target: WorkItem): AsyncGenerat
           columnName: sourceColumn.name,
           projectId: targetProjectId
         } as AddProjectColumnInput;
-        targetColumnId = (await addProjectColumn(input)).addProjectColumn.columnEdge.node.id;
+        targetColumnId = (await addProjectColumn(input, gitHubClient)).addProjectColumn.columnEdge.node.id;
       } catch (error) {
         console.error(`[ERROR] There was an error adding a project column`, error);
         continue;
@@ -105,7 +107,7 @@ export async function* migrate(source: WorkItem, target: WorkItem): AsyncGenerat
         note: cardNote,
         projectColumnId: targetColumnId
       };
-      const addProjectCardResponse: AddProjectCardResponse = await addProjectCard(addProjectCardInput);
+      const addProjectCardResponse: AddProjectCardResponse = await addProjectCard(addProjectCardInput, gitHubClient);
       yield addProjectCardResponse;
     }
   }
