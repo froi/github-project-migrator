@@ -1,6 +1,8 @@
 import fetch from 'node-fetch';
 import querystring from 'querystring';
 import open from 'open';
+import inquirer from 'inquirer';
+
 import {
   DeviceCodeResponse,
   VerifyDeviceAuthorizationResponse,
@@ -17,54 +19,59 @@ const DEVICE_CODE_URL_FORMAT = 'https://%s/login/device/code';
 const CLIENT_ID = "2610da144df1af7bb253";
 const OAUTH_SCOPES = "repo,write:org,read:org";
 
-async function getDeviceCode(deviceCodeUrl:string): Promise<DeviceCodeResponse> {
+async function getDeviceCode(deviceCodeUrl: string): Promise<DeviceCodeResponse> {
   // https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps#step-1-app-requests-the-device-and-user-verification-codes-from-github
   const now = new Date();
-  let response;
-  try {
-    response = await fetch(deviceCodeUrl, {
-      method: "POST",
-      body: JSON.stringify({
-        "client_id": CLIENT_ID,
-        "scope": OAUTH_SCOPES
-      }),
-      headers: {
-        'content-type': 'application/json'
-      }
-    });
-    const parsedResponse = querystring.parse(await response.text());
-
-    if(parsedResponse.error) {
-      throw new Error(`[ERROR]: There was an error requesting the device code - ${parsedResponse.error}` +
-        ` : ${parsedResponse.error_description}`);
+  const response = await fetch(deviceCodeUrl, {
+    method: "POST",
+    body: JSON.stringify({
+      "client_id": CLIENT_ID,
+      "scope": OAUTH_SCOPES
+    }),
+    headers: {
+      'content-type': 'application/json'
     }
+  });
+  const parsedResponse = querystring.parse(await response.text());
 
-    const {
-      device_code,
-      user_code,
-      verification_uri,
-      expires_in,
-      interval
-    } = parsedResponse;
-
-    const deviceCodeExpirseIn = add(now, { seconds: parseInt(expires_in as string) });
-
-    const values = {
-      deviceCode: device_code as string,
-      userCode: user_code as string,
-      verificationUri: verification_uri as string,
-      deviceCodeExpirseIn,
-      deviceCodeRequestInterval: parseInt(interval as string)
-    };
-    console.log(`First copy your one-time code: ${values.userCode}`);
-    console.log(`Press Enter to open github.com in your browser and enter your code...`);
-    await open(values.verificationUri);
-
-    return values;
-  } catch(error) {
-    console.error(error);
-    throw error;
+  if(parsedResponse.error) {
+    throw new Error(`[ERROR]: There was an error requesting the device code - ${parsedResponse.error}` +
+      ` : ${parsedResponse.error_description}`);
   }
+
+  const {
+    device_code,
+    user_code,
+    verification_uri,
+    expires_in,
+    interval
+  } = parsedResponse;
+
+  const deviceCodeExpirseIn = add(now, { seconds: parseInt(expires_in as string) });
+
+  const values = {
+    deviceCode: device_code as string,
+    userCode: user_code as string,
+    verificationUri: verification_uri as string,
+    deviceCodeExpirseIn,
+    deviceCodeRequestInterval: parseInt(interval as string)
+  };
+  console.log(`First copy your one-time code: ${values.userCode}`);
+  const {openBrowser} = await inquirer.prompt([{
+    type: 'confirm',
+    message: `Do you want to open you browser to github.com to enter your code?`,
+    name: 'openBrowser'
+  }]) as { openBrowser: boolean };
+
+  if(openBrowser){
+    await open(values.verificationUri);
+  } else {
+    console.log("You need to authorize this device to be able to migrate projects.");
+    console.log("Stopping authorization process.");
+    process.exit(0);
+  }
+
+  return values;
 }
 
 async function verifyDeviceAuthorization(deviceCode: string, deviceCodeUrl: string, deviceCodeExpirseIn: Date, githubHost: string): Promise<VerifyDeviceAuthorizationResponse> {
