@@ -121,7 +121,7 @@ async function main(): Promise<void> {
           await orgToOrg(gitHubHost);
           break;
         default:
-          console.log("Nope");
+          console.log("🧐 This is an unrecognized option. 🤭");
       }
     });
     program.command('auth')
@@ -134,13 +134,15 @@ async function main(): Promise<void> {
         if(config && config.oauth_token) {
           const {reAuth} = await inquirer.prompt([{
             type: 'confirm',
-            message: `You've already authenticated. Do you wish to do so again?`,
+            message: `⚠️ You've already authenticated. Do you wish to do so again?`,
             name: 'reAuth'
           }]) as { reAuth: boolean};
           execAuth = reAuth;
         }
         if( execAuth ) {
           await auth(gitHubHost);
+        } else {
+          console.log('OK, have a good one! 😊');
         }
       });
 

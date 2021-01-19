@@ -66,8 +66,8 @@ async function getDeviceCode(deviceCodeUrl: string): Promise<DeviceCodeResponse>
   if(openBrowser){
     await open(values.verificationUri);
   } else {
-    console.log("You need to authorize this device to be able to migrate projects.");
-    console.log("Stopping authorization process.");
+    console.log("⚠️ You need to authorize this device to be able to migrate projects.");
+    console.log("👋Stopping authorization process.");
     process.exit(0);
   }
 
@@ -98,11 +98,10 @@ async function verifyDeviceAuthorization(deviceCode: string, deviceCodeUrl: stri
     });
     const responseValues = querystring.parse(await response.text());
     if( "error" in responseValues) {
-      if(responseValues.error === AccessTokenErrors.AUTHORIZATION_PENDING) {
-        throw new Error(responseValues.error_description as string);
-      } else {
-        console.error('An unforeseen error has happened!!! 💔');
-        process.exit(9999);
+      if(responseValues.error !== AccessTokenErrors.AUTHORIZATION_PENDING) {
+        const errorMsg = `An unforeseen error has occurred!!! 💔
+        ${responseValues.error}`;
+        throw new Error(errorMsg);
       }
     } else {
       return {
@@ -116,13 +115,14 @@ async function verifyDeviceAuthorization(deviceCode: string, deviceCodeUrl: stri
     }
   } catch(error) {
     console.error(error);
+    process.exit(9999);
   }
   return {isAuthorized: false, accessToken: null };
 }
 export async function auth(githubHost: string): Promise<HostConfig> {
   // TODO: prompt user to select github.com or github enterprise
   const deviceCodeUrl = util.format(DEVICE_CODE_URL_FORMAT, githubHost);
-  console.log('This auth does not support GitHub Enterprise Server at this moment. Support will come soon.');
+  console.warn('⚠️ This auth does not support GitHub Enterprise Server at this moment. Support will come soon.');
 
   const {
     deviceCode,
@@ -133,11 +133,13 @@ export async function auth(githubHost: string): Promise<HostConfig> {
   let verifyDeviceAuthorizationResponse: VerifyDeviceAuthorizationResponse;
   let isAuthorized = false;
 
+  console.log("⏳ Waiting for device authorization.");
   do {
     verifyDeviceAuthorizationResponse = await verifyDeviceAuthorization(deviceCode, deviceCodeUrl, deviceCodeExpirseIn, githubHost);
     isAuthorized = verifyDeviceAuthorizationResponse.isAuthorized;
     await wait(deviceCodeRequestInterval);
   } while(!isAuthorized);
+  console.log("✅ Device authorized 💚");
   const authData = {
     oauth_token: verifyDeviceAuthorizationResponse.accessToken?.token || '',
     user: ''
