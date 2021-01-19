@@ -58,7 +58,7 @@ Siempre puede cancelar el comando presionando `ctrl + C` en su teclado.
 
 Este proyecto de adhiere al __contributors covenant__. Pueden leer la version en español [aqui][CODIGO_DE_CONDUCTA].
 
-Para contribuir por favor lea [nuestro documento](CONTRIBUTING.md) de como contribuir a este proyecto.
+Para contribuir por favor lea [nuestro documento CONTRIBUTING.md][CONTRIBUTING] de como contribuir a este proyecto.
 
 ----
 
@@ -114,8 +114,9 @@ You can always hit `ctrl + C` on your keyboard to cancel your command.
 
 This project adheres to the contributors covenant. You can read the English version [here][CODE_OF_CONDUCT].
 
-To contribute please read [our document](CONTRIBUTING.md) on how to contribute to this project.
+To contribute please read [our CONTRIBUTING.md document][CONTRIBUTING] on how to contribute to this project.
 
+[CONTRIBUTING]: https://github.com/froi/github-project-migrator/blob/main/CONTRIBUTING.md
 [CODE_OF_CONDUCT]: https://github.com/froi/github-project-migrator/blob/main/.github/code_of_conduct.md
 [CODIGO_DE_CONDUCTA]: https://github.com/froi/github-project-migrator/blob/main/.github/codigo_de_conducta.md
 [NODEJS]: https://nodejs.org/en/download/
