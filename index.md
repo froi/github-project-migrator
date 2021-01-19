@@ -116,6 +116,6 @@ This project adheres to the contributors covenant. You can read the English vers
 
 To contribute please read [our document](CONTRIBUTING.md) on how to contribute to this project.
 
-[CODE_OF_CONDUCT]: .github/code_of_conduct.md
-[CODIGO_DE_CONDUCTA]: .github/codigo_de_conducta.md
+[CODE_OF_CONDUCT]: https://github.com/froi/github-project-migrator/blob/main/.github/code_of_conduct.md
+[CODIGO_DE_CONDUCTA]: https://github.com/froi/github-project-migrator/blob/main/.github/codigo_de_conducta.md
 [NODEJS]: https://nodejs.org/en/download/
