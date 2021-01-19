@@ -4,69 +4,117 @@
 
 ## Español
 
-Una herramienta para ayudar move y migrar un tablero de proyecto de un repositorio a una organización.
+Una herramienta para ayudar move y migrar un tablero de proyecto. Las migraciónes apoyadas son:
 
-### Código de Conducta
+- Repositorio a repositorio
+- Repositorio a organización
+- Organización a repositorio
+- Entre tableros en una misma organización
 
-Este projecto de adhiere al contributors covenant. Pueden leer la version en español [aqui][CODIGO_DE_CONDUCTA].
+### Instalación
 
-### Como contribuir
+Necesitas tener [Node.js instalado][NODEJS] junto a NPM para poder instalar esta herramienta.
 
-Por favor lea [nuestro documento](CONTRIBUTING.md) de como contribuir a este proyecto.
+Para instalar la herramienta ejecute `npm install -g gh-project-migrator`. Esto va a instalar el CLI a nivel global.
 
-Tambien puedes seguir [este tablero](https://github.com/froi/github-project-migrator/projects/1) para ver en que se esta trabajando.
-### Como correr este proyecto
+Una vez termine la instalación puede ejecutar `gh-project-migrator migrate` para migrar tableros o `gh-project-migrator auth` para autorizar la herramienta contra GitHub.
 
-#### Pre requisitos
+Al ejecutar la herramienta solo tienes que seguir las instrucciones para poder hacer una migración.
 
-Para trabajar o correr este proyecto necesita [instalar Node.js][NODEJS] en su maquina/computadora.
+### Uso
 
-#### Pasos
+Para ejecutar el CLI necesita ejecutar el comando `gh-project-migrator <command>`.
 
-1. Utilizando su terminal clone el repositorio `> git clone https://github.com/froi/github-project-migrator.git`
-1. Muevase a directorio creado `> cd github-project-migrator`
-1. Instale las dependencias del proyecto `> npm install`
-1. Renombre el archivo `.env.example` a `.env`
-    1. Agregue o reemplace los valores necesarios en este archivo
-1. Ejecute el comando de __build__ `> npm run build`
-1. Ejecute el comando de __start__ `> npm start`
+```shell
+$ gh-project-migrator --help
+Usage: gh-project-migrator [options] [command]
 
-:rotating_light: __Nota__ :rotating_light:
+Options:
+  -h, --help      display help for command
 
-El proyecto tambien incluye el commando __build-start__ que ejecuta los commandos de __build__ y __start__ `> npm run build-start` :eyes:
+Commands:
+  migrate
+  auth
+  help [command]  display help for command
+```
+
+#### Auth
+
+`gh-project-migrator auth`
+
+Autoriza el acceso a GitHub al CLI y su dispositivo. Este CLI utiliza el método de autorización GitHub Device flow y pedirá acceso a su cuento utilizando un código especial.
+
+Una vez autorice al CLI un archivo de configuración con sus credenciales se va a crear en el directorio principal de su usuario.
+
+#### Migrate
+
+`gh-project-migrator migrate`
+
+Ejecuta un migración de un tablero. El CLI despliega instrucciones que le ayudara completar la acción que quiere hacer.
+
+Siempre puede cancelar el comando presionando `ctrl + C` en su teclado.
+
+### Código de Conducta y como contribuir
+
+Este proyecto de adhiere al __contributors covenant__. Pueden leer la version en español [aqui][CODIGO_DE_CONDUCTA].
+
+Para contribuir por favor lea [nuestro documento](CONTRIBUTING.md) de como contribuir a este proyecto.
+
+----
 
 ## English
 
-A tool to help move and migrate GitHub project boards from a repository to an organization.
+A tool to help move and migrate GitHub project boards. The supported migrations are:
 
-### Code of Conduct
+- Repository to repository
+- Repository to organization
+- Organization to repository
+- Between to organization project boards
+
+### Installation
+
+Before installing you need to have [Node.js instalado][NODEJS] along with NPM installed.
+
+To install this tool please run `npm install -g gh-project-migrator`. This will install the CLI globally on you machine.
+
+### Usage
+
+To call up the CLI you need to use the `gh-project-migrator <command>` command.
+
+```shell
+$ gh-project-migrator --help
+Usage: gh-project-migrator [options] [command]
+
+Options:
+  -h, --help      display help for command
+
+Commands:
+  migrate
+  auth
+  help [command]  display help for command
+```
+
+#### Auth
+
+`gh-project-migrator auth`
+
+Authorize the CLI and device to access GitHub. This CLI uses the GitHub Device flow and will ask you to authorize the device using a special code.
+
+Once you authorize the CLI a file with your credential will be save on your machine in you root directory.
+
+#### Migrate
+
+`gh-project-migrator migrate`
+
+Executes a migration for a project board. The CLI prompts will guide you in selecting what you want to accomplish.
+
+You can always hit `ctrl + C` on your keyboard to cancel your command.
+
+### Code of Conduct and how to contribute
 
 This project adheres to the contributors covenant. You can read the English version [here][CODE_OF_CONDUCT].
 
-### How to contribute
-
-Please read [our document](CONTIBUTING.MD) on how to contribute to this project.
-
-You can also take a look at [our project board](https://github.com/froi/github-project-migrator/projects/1) to see what's being worked on and what isn't.
-### How to run this project
-
-#### Prerequisites
-
-To work with or run this project you need to have [Node.js installed][NODEJS] on your machine/computer.
-
-#### Steps
-
-1. Using your terminal clone the repository `> git clone https://github.com/froi/github-project-migrator.git`
-1. Move into the directory that was created `> cd github-project-migrator`
-1. Install project dependencies `> npm install`
-1. Rename the the `.env.example` file to `.env`
-    1. Add or replace the necessary values in this file
-1. Run the __build__ command `> npm run build`
-1. Run the __start__ command `> npm start`
-
-:rotating_light: __Note__ :rotating_light:
-
-The project also includes the __build-start__ command, which runs __build__ and __start__ `> npm run build-start` :eyes:
+To contribute please read [our document](CONTIBUTING.MD) on how to contribute to this project.
 
 [CODE_OF_CONDUCT]: .github/code_of_conduct.md
 [CODIGO_DE_CONDUCTA]: .github/codigo_de_conducta.md
