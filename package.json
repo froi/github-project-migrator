@@ -78,7 +78,7 @@
   "author": "Froilán Irizarry Rivera",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/froi/gh-project-migrator/issues"
+    "url": "https://github.com/froi/github-project-migrator/issues"
   },
-  "homepage": "https://github.com/froi/gh-project-migrator#readme"
+  "homepage": "https://github.com/froi/github-project-migrator"
 }
