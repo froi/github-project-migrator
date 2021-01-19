@@ -69,7 +69,6 @@ export function getConfig(gitHubHost: string | null = null): Config | HostConfig
     }
     return null;
   } catch(error) {
-    console.error(error);
     return null;
   }
 }
