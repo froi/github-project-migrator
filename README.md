@@ -114,7 +114,7 @@ You can always hit `ctrl + C` on your keyboard to cancel your command.
 
 This project adheres to the contributors covenant. You can read the English version [here][CODE_OF_CONDUCT].
 
-To contribute please read [our document](CONTIBUTING.MD) on how to contribute to this project.
+To contribute please read [our document](CONTRIBUTING.md) on how to contribute to this project.
 
 [CODE_OF_CONDUCT]: .github/code_of_conduct.md
 [CODIGO_DE_CONDUCTA]: .github/codigo_de_conducta.md
