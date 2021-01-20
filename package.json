@@ -67,7 +67,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/froi/gh-project-migrator.git"
+    "url": "git+https://github.com/froi/gihub-project-migrator.git"
   },
   "keywords": [
     "github",
