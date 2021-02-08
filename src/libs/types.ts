@@ -55,13 +55,26 @@ export enum ProjectColumnPurpose {
   IN_PROGRESS = "IN_PROGRESS",
   TODO = "TODO",
 }
+
+export enum CardContentType {
+  ISSUE = "Issue",
+  PULL_REQUEST = "PullRequest"
+}
+export interface Content {
+  __typename: CardContentType;
+  id: ID;
+  number: number;
+  url: string;
+}
+interface AdditionalContent extends Content {
+  repository: {
+    id: ID;
+    nameWithOwner: string;
+  }
+}
 export interface ProjectCard {
   note: string;
-  content: {
-    __typename: string;
-    id: ID;
-    number: number;
-  };
+  content: Content | AdditionalContent;
 }
 export interface ProjectColumns {
   id: ID;
@@ -80,6 +93,9 @@ export interface ProjectResponse {
 }
 export interface GetRepoProjectResponse {
   repository: {
+    id: ID;
+    url: string;
+    nameWithOwner: string;
     project: ProjectResponse;
   };
 }
@@ -130,11 +146,24 @@ export interface AddProjectCardResponse {
     };
   };
 }
+export interface TransferIssueResponse {
+  transferIssue: {
+    issue: {
+      id: ID;
+      number: number;
+      url: string;
+    }
+  }
+}
 export interface AddProjectCardInput extends RequestParameters {
   clientMutationId?: string;
   contentId?: ID | null;
   note?: string | null;
   projectColumnId: ID;
+}
+export interface TransferIssueInput extends RequestParameters {
+  issueId: ID;
+  repositoryId: ID;
 }
 export interface AddProjectColumnInput extends RequestParameters {
   projectId: ID;
@@ -154,7 +183,8 @@ export enum GraphQlQueries {
   ADD_PROJECT_CARD = "add-project-card.graphql",
   GET_ORG_PROJECT = "get-org-project.graphql",
   GET_REPO_PROJECT = "get-repo-project.graphql",
-  ADD_PROJECT_COLUMN = "add-project-column.graphql"
+  ADD_PROJECT_COLUMN = "add-project-column.graphql",
+  TRANSFER_ISSUE = "transfer-issue.graphql"
 }
 
 export enum WorkItemType {
@@ -179,6 +209,7 @@ export interface DefaultCliAnswers {
   sourceProjectNumber: string;
   target: string;
   targetProjectNumber: string;
+  transferIssues: boolean;
 }
 
 export interface OrgToOrgCliAnswers {

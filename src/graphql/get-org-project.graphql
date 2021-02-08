@@ -15,10 +15,20 @@ query ($org: String!, $projectNumber: Int!){
                 ...on Issue {
                   id
                   number
+                  repository {
+                    id
+                    nameWithOwner
+                  }
+                  url
                 }
                 ...on PullRequest {
                   id
                   number
+                  repository {
+                    id
+                    nameWithOwner
+                  }
+                  url
                 }
               }
             }

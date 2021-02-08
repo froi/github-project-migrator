@@ -1,5 +1,8 @@
 query ($owner: String!, $repo: String!, $projectNumber: Int!){
   repository(name:$repo, owner:$owner) {
+    id
+    url
+    nameWithOwner
     project(number:$projectNumber) {
       id
       name
@@ -15,10 +18,12 @@ query ($owner: String!, $repo: String!, $projectNumber: Int!){
                 ...on Issue {
                   id
                   number
+                  url
                 }
                 ...on PullRequest {
                   id
                   number
+                  url
                 }
               }
             }
