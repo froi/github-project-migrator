@@ -67,7 +67,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/froi/gihub-project-migrator.git"
+    "url": "git+https://github.com/froi/github-project-migrator.git"
   },
   "keywords": [
     "github",
@@ -80,5 +80,5 @@
   "bugs": {
     "url": "https://github.com/froi/github-project-migrator/issues"
   },
-  "homepage": "https://github.com/froi/github-project-migrator"
+  "homepage": "https://froi.dev/github-project-migrator/"
 }
