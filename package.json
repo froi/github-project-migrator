@@ -1,6 +1,6 @@
 {
   "name": "gh-project-migrator",
-  "version": "1.2.4",
+  "version": "1.3.0",
   "description": "Application that helps you move your GitHub project boards between repositories and organizations.",
   "main": "dist/index.js",
   "bin": {
