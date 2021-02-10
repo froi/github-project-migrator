@@ -1,6 +1,12 @@
 import {validateProjectNumberInput, validateRepoInput} from './utils';
 import {ActionsTypes} from './types';
 
+const TRANSFER_ISSUES = {
+  type: "confirm",
+  message: "Do you wish to transfer issues where necessary?",
+  name: "transferIssues"
+};
+
 export const ACTIONS_PROMPTS = [{
   type: 'list',
   name: 'action',
@@ -75,7 +81,8 @@ export const ORG_TO_REPO_PROMPTS = [
     message: "What is the target project number?",
     name: "targetProjectNumber",
     validate: validateProjectNumberInput
-  }
+  },
+  TRANSFER_ISSUES
 ];
 
 export const REPO_TO_REPO_PROMPTS = [
@@ -102,7 +109,8 @@ export const REPO_TO_REPO_PROMPTS = [
     message: "What is the target project number?",
     name: "targetProjectNumber",
     validate: validateProjectNumberInput
-  }
+  },
+  TRANSFER_ISSUES
 ];
 
 export const ORG_TO_ORG_PROMPTS = [

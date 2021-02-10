@@ -43,7 +43,7 @@ async function orgToRepo(gitHubHost: string): Promise<void> {
     value: splitRepo(answers.target),
     project: parseInt(answers.targetProjectNumber)
   };
-  for await(const result of migrate(source, target, gitHubHost)){
+  for await(const result of migrate(source, target, gitHubHost, answers.transferIssues)){
     const column = result.addProjectCard.cardEdge.node.column;
     const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
 
@@ -62,7 +62,7 @@ async function repoToRepo(gitHubHost: string): Promise<void> {
     value: splitRepo(answers.target),
     project: parseInt(answers.targetProjectNumber)
   };
-  for await(const result of migrate(source, target, gitHubHost)){
+  for await(const result of migrate(source, target, gitHubHost, answers.transferIssues)){
     const column = result.addProjectCard.cardEdge.node.column;
     const messsage = `Card created for project ${column.project.name} in column ${column.name}`;
 
