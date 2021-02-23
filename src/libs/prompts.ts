@@ -3,7 +3,7 @@ import {ActionsTypes} from './types';
 
 const TRANSFER_ISSUES = {
   type: "confirm",
-  message: "Do you wish to transfer issues where necessary?",
+  message: "Do you wish to transfer issues where necessary? (Labels will not be transferred)",
   name: "transferIssues"
 };
 
