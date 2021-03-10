@@ -19,7 +19,7 @@ assignees: ''
 1. Input value ....
 2. Execute with ...
 
-##Error output
+## Error output
 <!-- Please past any error output you have -->
 
 ```
