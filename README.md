@@ -73,7 +73,7 @@ A tool to help move and migrate GitHub project boards. The supported migrations 
 
 ### Installation
 
-Before installing you need to have [Node.js instalado][NODEJS] along with NPM installed.
+Before installing you need to have [Node.js][NODEJS] along with NPM installed.
 
 To install this tool please run `npm install -g gh-project-migrator`. This will install the CLI globally on you machine.
 
