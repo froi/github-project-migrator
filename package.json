@@ -13,7 +13,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@octokit/graphql": "^4.5.8",
+    "@octokit/graphql": "^8.2.1",
     "commander": "^7.0.0",
     "date-fns": "^2.16.1",
     "inquirer": "^7.3.3",
